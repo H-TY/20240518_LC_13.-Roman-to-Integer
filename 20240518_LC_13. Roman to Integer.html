@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+
+  <script>
+
+    // <Ex1>
+    Input: s = "III"
+    // Output: 3
+
+    // <Ex2>
+    Input: s = "LVIII"
+    // Output: 58
+    // Explanation: L = 50, V = 5, III = 3
+
+    // <Ex3>
+    Input: s = "MCMXCIV"
+    // Output: 1994
+    // Explanation: M = 1000, CM = 900, XC = 90 and IV = 4
+
+    // <Ex4>
+    // Input: s = "IIV"
+    // Output: 5
+
+    // 將羅馬符號和數字，設成陣列 R
+    const R = {
+      I: "1",
+      IV: "4",
+      V: "5",
+      IX: "9",
+      X: "10",
+      XL: "40",
+      L: "50",
+      XC: "90",
+      C: "100",
+      CD: "400",
+      D: "500",
+      CM: "900",
+      M: "1000",
+      "": "0",
+    }
+
+
+    // .split('') 將字串改為陣列 Ts
+    let Ts = s.split('')
+    console.log(Ts)
+
+    // 找出字串內有 IV、IX、XL、XC、CD、CM 的文字
+    // 用 .matchAll 找出上述文字所在的索引位置
+    // 用 | 分隔想搜尋的文字
+    let F = /IV|IX|XL|XC|CD|CM/g
+
+    // 因為 .matchAll() 的資料輸出是"正則表達式Regex"，只能用迴圈取資料
+    for (let f of s.matchAll(F)) {
+      console.log(f)
+      // ['CM', index: 1, input: 'MCMXCIV', groups: undefined]
+      // ['XC', index: 3, input: 'MCMXCIV', groups: undefined]
+      // ['IV', index: 5, input: 'MCMXCIV', groups: undefined]
+      console.log(f.index)
+
+      // 刪除 Ts 原陣列中的上述文字，避免後續重複加總計算
+      // 用 .splice(開始索引位置, 要刪除的數量) 刪除 Ts 陣列中的上述文字
+      // 將取出的文字 f[0] 加入陣列
+      // 因刪除陣列中的2個位置，補上的卻只有一個索引位置，故再用 "" 空字串補上另一個空缺，避免跑下一次迴圈時，搜尋的索引位置跑掉
+      Ts.splice(f.index, 2, f[0], "")
+      console.log(Ts)
+    }
+
+    // 設 sum 為計算總合的變數
+    let sum = 0
+
+    // 用 for of 取值
+    for (let a of Ts) {
+      sum += parseInt(R[`${a}`])
+    }
+
+    console.log(sum)
+
+
+
+
+
+
+
+    /**
+ * @param {string} s
+ * @return {number}
+ */
+    var romanToInt = function (s) {
+      const R = {
+        I: "1",
+        IV: "4",
+        V: "5",
+        IX: "9",
+        X: "10",
+        XL: "40",
+        L: "50",
+        XC: "90",
+        C: "100",
+        CD: "400",
+        D: "500",
+        CM: "900",
+        M: "1000",
+        "": "0",
+      }
+
+      let Ts = s.split('')
+
+      let F = /IV|IX|XL|XC|CD|CM/g
+
+      for (let f of s.matchAll(F)) {
+        Ts.splice(f.index, 2, f[0], "")
+      }
+
+      let sum = 0
+
+      for (let a of Ts) {
+        sum += parseInt(R[`${a}`])
+      }
+
+      return sum
+
+    };
+
+
+
+  </script>
+</body>
+
+</html>
